@@ -106,3 +106,8 @@ class Installer:
                 print("Failed to get Latest Version!")
                 return
         return self.latest_version
+
+
+    def wrap(self, path) -> str:
+        string = str(path)
+        return f'"{string}"' if " " in string else string
