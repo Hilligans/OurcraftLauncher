@@ -1,7 +1,9 @@
+import platform
 from WindowsInstaller import WindowsInstaller
 
 
 def main() -> None:
+    operating_system = platform.system()
     if operating_system == "Windows":
         WindowsInstaller().install()
     else:
