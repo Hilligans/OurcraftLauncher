@@ -90,8 +90,8 @@ class WindowsInstaller(Installer):
         try:
             game_path: Path = Path(version_dir, f"Ourcraft-{SETTINGS.GAME_BRANCH}")
             os.chdir(game_path)
-            os.system(f"set JAVA_HOME={Path(self.install_dir, SETTINGS.JDK_DIR)}")
-            os.system(str(Path(self.install_dir, SETTINGS.MAVEN_DIR, "bin", "mvn")) + " package")
+            os.system(f"set JAVA_HOME={self.wrap(Path(self.install_dir, SETTINGS.JDK_DIR))}")
+            os.system(self.wrap(Path(self.install_dir, SETTINGS.MAVEN_DIR, "bin", "mvn")) + " package")
 
 
 
@@ -107,7 +107,7 @@ class WindowsInstaller(Installer):
             version = self.get_latest_version()
             version_dir: Path = Path(self.installations_dir, version)
             print("Starting Game!")
-            os.system("java -jar " + str(Path(version_dir, f"Ourcraft-{SETTINGS.GAME_BRANCH}", "target", "Ourcraft-1.0-jar-with-dependencies.jar")))
+            os.system("java -jar " + self.wrap(Path(version_dir, f"Ourcraft-{SETTINGS.GAME_BRANCH}", "target", "Ourcraft-1.0-jar-with-dependencies.jar")))
             return True
         except Exception as e:
             print(e)
