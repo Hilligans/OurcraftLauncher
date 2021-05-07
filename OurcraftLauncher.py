@@ -40,9 +40,12 @@ def installWindows():
                 zip.extractall(pathToProject + '\\Maven')
                 zip.close()
                 os.remove("maven.zip")
-                os.system('setx path "%path%;' + pathToProject + '\\Maven\\apache-maven-3.8.1\\bin"')
+            os.system('setx path "%path%;' + pathToProject + '\\Maven\\apache-maven-3.8.1\\bin"')
+            time.sleep(2)
         else:
             os.system('setx path "%path%;C:\\Program Files\\Maven\\apache-maven-3.8.1\\bin" /M')
+            time.sleep(2)
+
     if not os.path.exists(pathToProject + "\\Ourcraft-" + projectName + ".jar"):
         print("downloading game")
         os.system('curl -L https://github.com/Hilligans/Ourcraft/archive/refs/heads/main.zip --output ourcraft.zip --silent')
