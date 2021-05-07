@@ -1,6 +1,7 @@
 import subprocess
 import os
 import platform
+import time
 from zipfile import ZipFile
 import ctypes
 import shutil
@@ -26,7 +27,8 @@ def installWindows():
             zip.close()
         os.remove("java16.zip")
     if os.getenv("JAVA_HOME") is None:
-        os.system("setx JAVA_HOME \"" + pathToProject + "\\" + javaName + "\" /M")
+        os.system("setx JAVA_HOME \"" + pathToProject + "\\" + javaName + "\"")
+    time.sleep(2)
     try:
         subprocess.check_output(['WHERE', 'mvn'])
     except:
@@ -34,10 +36,13 @@ def installWindows():
             print("downloading maven")
             os.system('curl -L https://mirror.its.dal.ca/apache/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.zip --output maven.zip --silent')
             with ZipFile("maven.zip") as zip:
-                zip.extractall('C:\\Program Files\\Maven')
+                os.mkdir(pathToProject + '\\Maven')
+                zip.extractall(pathToProject + '\\Maven')
                 zip.close()
                 os.remove("maven.zip")
-        os.system('setx path "%path%;C:\\Program Files\\Maven\\apache-maven-3.8.1\\bin" /M')
+                os.system('setx path "%path%;' + pathToProject + '\\Maven\\apache-maven-3.8.1\\bin"')
+        else:
+            os.system('setx path "%path%;C:\\Program Files\\Maven\\apache-maven-3.8.1\\bin" /M')
     if not os.path.exists(pathToProject + "\\Ourcraft-" + projectName + ".jar"):
         print("downloading game")
         os.system('curl -L https://github.com/Hilligans/Ourcraft/archive/refs/heads/main.zip --output ourcraft.zip --silent')
@@ -46,6 +51,7 @@ def installWindows():
             zip.close()
             os.remove("ourcraft.zip")
         os.chdir(pathToProject + "\\Ourcraft-main")
+        time.sleep(2)
         os.system("mvn package")
         os.rename(pathToProject + "\\Ourcraft-main\\target\\Ourcraft-1.0-jar-with-dependencies.jar", pathToProject + "\\Ourcraft-" + projectName + ".jar")
         try:
