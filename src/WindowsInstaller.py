@@ -35,6 +35,8 @@ class WindowsInstaller(Installer):
             with ZipFile(download_path) as zipped_file:
                 zipped_file: ZipFile
                 zipped_file.extractall(self.install_dir)
+                zipped_file.close()
+            os.remove(download_path)
             print("Extracted JDK to: " + str(self.install_dir))
             print("Installed JDK!")
             return True
@@ -56,6 +58,8 @@ class WindowsInstaller(Installer):
             with ZipFile(download_path) as zipped_file:
                 zipped_file: ZipFile
                 zipped_file.extractall(self.install_dir)
+                zipped_file.close()
+            os.remove(download_path)
             print("Extracted maven to: " + str(self.install_dir))
             print("Installed maven!")
             return True
@@ -63,7 +67,6 @@ class WindowsInstaller(Installer):
             print(e)
             print("Failed to download maven!")
         return False
-        
 
 
     def download_game(self, version_dir: Path, version: str):
@@ -78,6 +81,8 @@ class WindowsInstaller(Installer):
             with ZipFile(download_path) as zipped_file:
                 zipped_file: ZipFile
                 zipped_file.extractall(install_path)
+                zipped_file.close()
+            os.remove(download_path)
             print("Extracted game to: " + str(install_path))
             return True
         except Exception as e:
